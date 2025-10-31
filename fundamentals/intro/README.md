@@ -29,4 +29,61 @@
 
 The best refernce: [ARMv7-M Architecture Reference Manual](https://developer.arm.com/documentation/ddi0403/latest/)
 
-From this document (begininig in chapter 5: The Thumb Instruction Set Encoding)
+From this document (begininig in chapter 5: The Thumb Instruction Set Encoding),
+we can decode this instruction set that is in memory:
+
+in `mem8 0x08000008 4` = 0x4F 0xF0 0x64 0x01
+
+As it is little endian and thumb instruction set, we can have two half words:
+
+0xF04F 0x0164
+
+In binary:
+
+```
+0xF04F = 0b11110000 01001111
+0x0164 = 0b00000001 01100100
+```
+
+![image](image_01.png)
+
+As the bits \[15:11\] of the first halfword are `0b11110`, it is a 32-bit thumb instruction.
+
+![image](image_02.png)
+
+So, we will have:
+
+- op1: `0b10`
+- op2: `0b0000100`
+- op: `0b0`
+
+It's an Data processing (modified immediate) instruction class:
+
+![image](image_03.png)
+
+Rd means Destination Register and Rn means First Source Operand Register.
+
+- Op: `0b00100`
+- Rn: `0b1111`
+- Rd: `0b0001` - (R1)
+
+It's an Move (immediate) Instruction:
+
+![image](image_04.png)
+
+Using encoding T2:
+
+- i = 0
+- S = 0
+- imm3 = 0
+- Rd = `0b0001` (R1)
+- imm8 = 100
+
+imm stands for immediate value.
+
+The final instructions is: `mov r1, #100`
+
+# The RISC Design Philosoohy
+
+
+
