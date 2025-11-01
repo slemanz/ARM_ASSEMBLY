@@ -83,7 +83,20 @@ imm stands for immediate value.
 
 The final instructions is: `mov r1, #100`
 
-# The RISC Design Philosoohy
+# The RISC and ARM Design Philosoohy
 
+ARM does not manufacture processors.
+
+**RISC** - Reduced Instruction Set Computer
+**CISC** - Complex Instruction Set Computer
+
+In RISC:
+
+- Instructions: Reduced number of instructions.
+- Pipelines: Instructions are executed in parallel by pipelines.
+- Registers: Large general-purpose register set.
+- Load-Store: Processor operates on data held in registers.
+
+ARM mix RISC, High Code Density and Power Eficiency together.
 
 
