@@ -10,7 +10,18 @@ performance. Thumb-2 is a significant enhancement that includes both 16-bit and
 32-bit instructions, offering a combination of ARM-like performance and
 Thumb-like code density. 
 
-- ARM instruction: ADD RO, RO, R2
-- Thumb instruction: ADD RO, R2
+- ARM instruction: ADD R0, R0, R2
+- Thumb instruction: ADD R0, R2
 
 Thumb-2 instruction are supported by Cortex-M
+
+## Predefined Register Names
+
+- r0-r15 or R0-R15
+- a1-a4 (argument, result, or scratch registers, same as r0 to r3)
+- sp or SP
+- lr or LR
+- pc or PC
+- cpsr or CPSR
+- spsr or SPSR
+- apsr or APSR
