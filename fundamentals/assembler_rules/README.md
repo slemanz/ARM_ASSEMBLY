@@ -49,3 +49,37 @@ Thumb-2 instruction are supported by Cortex-M
 - .word: Allocate four-byte blocks of memory, and specify the initial contents.
 - .space: Allocate a zeroed block of memory.
 - .quad: Allocate eight-byte blocks of memory, and specify the initial contents.
+
+## Operators
+
+- **Data Processing Instructions:** These perform arithmetic and logical
+operations on registers. Examples include:
+
+- ADD: Addition.
+- SUB: Subtraction.
+- MUL: Multiplication.
+- AND, ORR, EOR, BIC: Bitwise logical operations (AND, OR, Exclusive OR, Bit Clear).
+- MOV: Move data between registers or load an immediate value.
+- MVN: Move and Negate.
+- CMP: Compare (updates flags based on subtraction).
+- TST: Test (updates flags based on bitwise AND).
+- LSL, LSR, ASR, ROR: Logical Shift Left, Logical Shift Right, Arithmetic Shift Right, Rotate Right.
+
+**Load and Store Instructions:** These move data between memory and registers.
+
+- LDR: Load Register (loads a word, halfword, or byte from memory into a register).
+- STR: Store Register (stores a word, halfword, or byte from a register into memory).
+- LDM, STM: Load Multiple, Store Multiple (load/store multiple registers from/to memory, often used for stack operations).
+- PUSH, POP: Stack operations, often implemented using STMDB and LDMIA with the stack pointer.
+
+**Branch and Control Instructions:** These manage program flow.
+
+- B: Branch (unconditional jump).
+- BL: Branch with Link (calls a subroutine, saving the return address in the Link Register, LR).
+- BX: Branch and Exchange (changes execution state, e.g., from ARM to Thumb or vice versa, and jumps to a new address).
+- BLX: Branch with Link and Exchange (combines BL and BX).
+
+**Special Instructions:**
+
+- SWI/SVC: Software Interrupt/System Call (initiates a system call).
+- MRS, MSR: Move from/to Status Register (accesses the CPSR or SPSR).
