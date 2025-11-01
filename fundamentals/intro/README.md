@@ -83,7 +83,7 @@ imm stands for immediate value.
 
 The final instructions is: `mov r1, #100`
 
-# The RISC and ARM Design Philosoohy
+# The RISC and ARM Design Philosophy
 
 ARM does not manufacture processors.
 
@@ -98,5 +98,28 @@ In RISC:
 - Load-Store: Processor operates on data held in registers.
 
 ARM mix RISC, High Code Density and Power Eficiency together.
+
+## Von Neumann and Harvard Architectures
+
+The main difference is that the von Neumann architecture uses a single memory
+and bus for both instructions and data, while the Harvard architecture uses
+separate, parallel memories and buses for them. This makes the von Neumann
+architecture simpler and cheaper, but the Harvard architecture faster because it
+can fetch instructions and data simultaneously, making it ideal for embedded and
+real-time systems. 
+
+**Von Neumann Architecture:**
+
+- Single bus is simpler design
+- Single bus is cheaper
+- Common memory for data and instructions
+- Does not allow simultaneous multiple memory fetches.
+
+**Harvard Architecture:**
+
+- Multi-Bus is relatively complex
+- Multi-Bus is relatively expensive
+- Separate memory for data an instructions
+- Allows 2 simultaneous memory fetches
 
 
