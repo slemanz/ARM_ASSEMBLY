@@ -122,4 +122,44 @@ real-time systems.
 - Separate memory for data an instructions
 - Allows 2 simultaneous memory fetches
 
+## ARM Cortex-M Registers
+
+- 13 General-Purpose registers
+- 3 Special-Purpose registers
+- 1 Status Registers 
+- 3 Interrupt mask registers
+
+ARM Cortex-M registers include 13 general-purpose registers (R0-R12),
+special-purpose registers like the Program Counter (R15), Link Register
+(R14), and Stack Pointer (R13), and status/control registers such as the
+Program Status Register (XPSR) and the Control Register. These registers are
+crucial for data storage, program execution flow, and managing the core's state,
+with some requiring privileged access for security and control. 
+
+**Special-purpose registers:**
+
+- Stack Pointer: (SP): Aliased as R13, this register points to the top of the
+stack. Processors can have two stack pointers, the Main Stack Pointer (MSP) and
+the Process Stack Pointer (PSP), selected by the Control Register.
+
+- Link Register (LR): Also known as R14, this register stores the return
+address for a function call, allowing the processor to return to the correct
+location after a subroutine completes.
+
+- Program Counter (PC): Referred to as R15, this register holds the memory
+address of the next instruction to be executed. 
+
+**Status and control registers**
+
+- Program Status Register (PSR): A special-purpose register that combines other
+status registers like the Application Program Status Register (\(APSR\)),
+Interrupt Program Status Register (IPSR), and Execution Program Status Register
+(EPSR).
+
+- Interrupt Mask registers: Registers like PRIMASK, FAULTMASK, and BASEPRI are
+used to control interrupt behavior and priorities.
+
+- Control Register: Manages core execution state, including the selection
+between the main or process stack pointer and privilege levels. 
+
 
