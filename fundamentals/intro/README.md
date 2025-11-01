@@ -162,4 +162,12 @@ used to control interrupt behavior and priorities.
 - Control Register: Manages core execution state, including the selection
 between the main or process stack pointer and privilege levels. 
 
+## Arm Cortex-M Vector Table
 
+The ARM Cortex-M vector table is a list of addresses, starting at the memory
+address `0x00000000` on reset, that contains the starting address for the main
+stack pointer and for every exception and interrupt handler. On system reset,
+the processor loads the main stack pointer value from the first word of the
+table and then fetches the address of the reset handler from the second word to
+begin execution. The Vector Table Offset Register (VTOR) can be used to change
+the table's starting address after reset to a different location in memory
