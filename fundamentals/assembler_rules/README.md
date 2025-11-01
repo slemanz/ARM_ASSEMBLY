@@ -25,3 +25,27 @@ Thumb-2 instruction are supported by Cortex-M
 - cpsr or CPSR
 - spsr or SPSR
 - apsr or APSR
+
+## Directives 
+
+- They are not instructions.
+- They assist and control the assembly process.
+- They are also called pseudo-ops
+
+**Commonly used:**
+
+- .thumb: Assemble code using thumb instruction set
+- .syntax: Specifies the syntax being used
+- .cpu: Specifies the cpu being used
+- .section: Creates a new section
+- .globl or .global: Makes an object accessible from another file
+- .equ: Gives a symbolic name to a numeric value
+- .end: Indicates the end of a file
+- .space: Reserves a block of memory and fills it with zero
+- .align: Ensures next object aligns properly
+- .req: Renames register
+- .byte: Allocate one-byte blocks of memory, and specify the initial contents
+- .hword: Reserves a block of memory and fills it with zero
+- .word: Allocate four-byte blocks of memory, and specify the initial contents.
+- .space: Allocate a zeroed block of memory.
+- .quad: Allocate eight-byte blocks of memory, and specify the initial contents.
