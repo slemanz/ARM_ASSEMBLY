@@ -83,3 +83,5 @@ operations on registers. Examples include:
 
 - SWI/SVC: Software Interrupt/System Call (initiates a system call).
 - MRS, MSR: Move from/to Status Register (accesses the CPSR or SPSR).
+
+## Examples
