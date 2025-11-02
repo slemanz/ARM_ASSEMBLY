@@ -87,3 +87,4 @@ operations on registers. Examples include:
 ## Examples
 
 - [Renaming](renaming.s)
+- [Allocating Space](allocating.s)
