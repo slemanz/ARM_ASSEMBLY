@@ -85,3 +85,5 @@ operations on registers. Examples include:
 - MRS, MSR: Move from/to Status Register (accesses the CPSR or SPSR).
 
 ## Examples
+
+- [Renaming](renaming.s)
