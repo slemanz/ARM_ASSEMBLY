@@ -15,10 +15,12 @@
 Reset_Handler:
 
 __main:
-        mov r5, #0x10
-        mov r3, #0x10
+        ldr r0, =0xBABEFACE
+        ldr r1, =0xDEADBEEF
 
-        add r6, r5, r3
+        eor r0, r0, r1
+        eor r1, r0, r1
+        eor r0, r0, r1
 
 stop:
         b   stop
