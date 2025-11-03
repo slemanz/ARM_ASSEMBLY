@@ -100,3 +100,30 @@ outside the square brackets of the address operand.
 LDR     R0, [R1], #4            ; R0 = Memory[R1]; then R1 = R1 + 4
 STR     R0, [R1], R2, LSL #2    ; Memory[R1] = R0; then R1 = R1 + (R2 << 2)
 ```
+
+## Endianness
+
+Refers to the order in which bytes are stored in a computer's memory for
+multi-byte data types. There are two types: big-endian, where the most
+significant byte (the "big end") is stored at the lowest memory address, and
+little-endian, where the least significant byte (the "little end") is stored at
+the lowest address. This byte order is crucial for network communication and
+data sharing, as a mismatch between systems can cause data corruption. 
+
+**Big-endian**
+- The most significant byte comes first.
+
+**Little-endian**
+- The least significant byte comes first.
+
+## Defining Memory Areas
+
+In ARM assembly, the DCD (Define Constant Data) directive is used to allocate
+one or more 32-bit words of memory and define their initial contents at runtime.
+These words are always aligned on 4-byte boundaries.
+
+```
+my_data DCD     1, 5, 20            ; Defines 3 words containing decimal values 1, 5, and 20
+        DCD     0xDEADBEEF          ; Defines a word containing the hexadecimal value DEADBEEF
+        DCD     my_label + 4        ; Defines a word containing the address of my_label plus 4 bytes
+```
