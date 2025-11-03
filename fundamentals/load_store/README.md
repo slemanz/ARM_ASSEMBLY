@@ -67,3 +67,36 @@ STR     r1, [r5], #8        ; store word to ea<r5>, r5 = r5+8
 ```
 
 `ea` means Effective Address.
+
+## Indexing
+
+ARM assembly includes addressing modes for load and store instructions that
+involve automatically updating a base register, known as pre-indexing and
+post-indexing. These modes are particularly useful for iterating through data
+structures or memory blocks.
+
+### Pre-indexed Addressing:
+
+In pre-indexed addressing with write-back, the offset is added to (or subtracted
+from) the base register before the memory access occurs. The resulting address
+is then used for the load or store operation, and the base register is updated
+with this new address. This is indicated by an exclamation mark (!) after the
+instruction's address operand.
+
+```
+LDR     R0, [R1, #4]!           ; R1 = R1 + 4; then R0 = Memory[R1]
+STR     R0, [R1, R2, LSL #2]!   ; R1 = R1 + (R2 << 2); then Memory[R1] = R0
+```
+
+### Post-indexed Addressing:
+
+In post-indexed addressing, the value of the base register alone is used as the
+memory address for the load or store operation. After the data transfer, the
+offset is added to (or subtracted from) the base register, and the result is
+written back into the base register. This is indicated by placing the offset
+outside the square brackets of the address operand.
+
+```
+LDR     R0, [R1], #4            ; R0 = Memory[R1]; then R1 = R1 + 4
+STR     R0, [R1], R2, LSL #2    ; Memory[R1] = R0; then R1 = R1 + (R2 << 2)
+```
