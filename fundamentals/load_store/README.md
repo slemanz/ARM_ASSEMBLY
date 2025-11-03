@@ -53,3 +53,17 @@ r0, which is 0x20008000.
 
 Therefore, after the execution of `LDRH r1, [r0]`, the value in r1 would become
 0x0000CDEF.
+
+### Example 2
+
+```
+LDR     r5, [r3]            ; load r5 with data from ea<r3>
+STRB    r0, [r9]            ; store data in r0 to ea<r9>
+STR     r3, [r9, r5, LSL#3] ; store data in r3 to ea<r8 +(r5<<3)>
+LDR     r1, [r0, #4]!       ; load r1 from ea<r0+4>, r0 = r0 + 4
+STRB    r7, [r6,#-1]!       ; store byte to ea<r6-1>, r6=r6-1
+LDR     r3, [r9], #4        ; load r3 from ea<r9>, r9 = 9+4
+STR     r1, [r5], #8        ; store word to ea<r5>, r5 = r5+8
+```
+
+`ea` means Effective Address.
