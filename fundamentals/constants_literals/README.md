@@ -82,3 +82,7 @@ of labels into registers, each with different capabilities and limitations.
     ```
         LDR R2, =GlobalData ; R2 now holds the address of GlobalData
     ```
+
+## Examples
+
+- [Simple Equation](simple_equation.s)
