@@ -86,3 +86,8 @@ of labels into registers, each with different capabilities and limitations.
 ## Examples
 
 - [Simple Equation](simple_equation.s)
+
+**Import from C to Assembly:**
+
+- [main.s](main.s)
+- [function.c](function.c)

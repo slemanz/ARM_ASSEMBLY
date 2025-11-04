@@ -11,14 +11,18 @@
 
         .section .text
 
+.global num
+.global Adder
+
 .thumb_func
 Reset_Handler:
 
 __main:
-        mov r5, #0x10
-        mov r3, #0x10
+        ldr r1, =num
+        mov r0, #100
+        str r0, [r1]
 
-        add r6, r5, r3
+        bl Adder
 
 stop:
         b   stop

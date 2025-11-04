@@ -23,6 +23,7 @@ OBJCOPY=arm-none-eabi-objcopy
 ############################################
 
 OBJS		+= $(BUILD_DIR)/main.o
+OBJS		+= $(BUILD_DIR)/function.o
 
 
 PREREQ = $(BUILD_DIR)/
@@ -34,6 +35,9 @@ $(PREREQ):
 
 $(BUILD_DIR)/%.o: $(ROOT_DIR)/%.s
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(BUILD_DIR)/$(*).o $(ROOT_DIR)/$(*).s
+
+$(BUILD_DIR)/%.o: $(ROOT_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(BUILD_DIR)/$(*).o $(ROOT_DIR)/$(*).c
 
 # TARGET ELF
 $(BUILD_DIR)/$(TARGET).elf: $(OBJS) 
