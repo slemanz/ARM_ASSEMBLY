@@ -139,3 +139,22 @@ bits from one end and filling with zeros (logical) or the sign bit (arithmetic).
 Rotations, however, move bits off one end and insert them on the opposite end,
 wrapping the bits around. 
 
+### Shifts
+
+- **Logical Shift Left (LSL):** Shifts bits to the left. Zeros are shifted in from
+the right, and the most significant bit is shifted into the carry flag. This
+operation is equivalent to multiplying by 2.
+- **Logical Shift Right (LSR):** Shifts bits to the right. Zeros are shifted in
+from the left, and the least significant bit is shifted into the carry flag.
+This is equivalent to unsigned division by 2.
+- **Arithmetic Shift Right (ASR):** Shifts bits to the right. The sign bit (most
+significant bit) is copied and shifted in from the left. This preserves the sign
+of the number and is used for signed division by 2. 
+
+### Rotations
+
+- **Rotate Right (ROR):** Shifts bits to the right, but the bits shifted off the
+right end are wrapped around and inserted into the leftmost position.
+- **Rotate Right with Extend (RRX):** Shifts bits to the right by one position.
+The bit shifted off the right end is shifted into the carry flag, and the value
+of the carry flag is inserted into the leftmost position. 
