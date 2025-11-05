@@ -130,3 +130,12 @@ ORR r1, r2, r3  ; r1 = r2 OR r3
 EOR r1, r2, r3  ; r1 = r2 exclusive OR r3
 BIC r1, r2, r3  ; r1 = r2 AND NOT 3
 ```
+
+## Shifts and Rotations
+
+ARM assembly includes shift (LSL, LSR, ASR) and rotate (ROR, RRX) instructions
+to manipulate bits within a register. Shifts move bits left or right, dropping
+bits from one end and filling with zeros (logical) or the sign bit (arithmetic).
+Rotations, however, move bits off one end and insert them on the opposite end,
+wrapping the bits around. 
+
