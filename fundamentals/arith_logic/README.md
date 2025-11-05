@@ -111,3 +111,22 @@ MSR PSR, r7  ; write all status information to r7
 3. Direct write to PSR to explicitly set or clear flags
 4. 16-bit Thumb ALU instruction
 
+## Boolean Operations
+
+ARM assembly uses specific instructions to perform bitwise logical operations
+that can be used to implement boolean logic. These instructions operate on the
+individual bits of registers, treating them as boolean values (0 for false, 1
+for true).
+
+- AND: Performs a bitwise logical AND operation.
+- ORR: Performs a bitwise logical OR operation.
+- EOR: Performs a bitwise logical Exclusive OR (XOR) operation.
+- BIC: Performs a Bit Clear operation. This is equivalent to Rd = Rn AND NOT Operand2.
+
+```
+MOVN r5, #0     ; r5 = -1 in two's complement
+AND r1, r2, r3  ; r1 = r2 AND r3
+ORR r1, r2, r3  ; r1 = r2 OR r3
+EOR r1, r2, r3  ; r1 = r2 exclusive OR r3
+BIC r1, r2, r3  ; r1 = r2 AND NOT 3
+```
