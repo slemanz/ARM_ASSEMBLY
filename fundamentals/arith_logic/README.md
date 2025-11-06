@@ -221,5 +221,10 @@ SMULL r4, r8, r2, r3    ; r4 = bits 31-0 of r2*r3
                         ; r8 = bits 63-32 of r2*r3
 UMULL r6, r8, r0, r1    ; {r8,r6} = r0*r1
 ```
+## Multiplying by a constant
 
-
+```
+LSL r1, r0, #2          ; r1 = r0*4
+ADD r0, r1, r1, LSL #2  ; r0 = r1 + r1*4
+RSB r0, r2, r2, LSL #3  ; r0 = r2*7
+```
