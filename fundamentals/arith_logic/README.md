@@ -191,3 +191,35 @@ ADDS r4, r0, r2 ; adding the least significant words
 ADC r5, r1, r3  ; adding the most significant words
 ```
 
+## Multiplication
+
+ARM assembly language provides several instructions for performing
+multiplication, catering to different needs such as standard multiplication,
+multiply-accumulate operations, and handling of 64-bit results.
+
+```
+MUL     32x32 multiply with 32-bit product
+MLA     32x32 multiply added to a 32-bit accumulated value
+SMULL   Signed 32x32 multiply with 64-bit product
+UMULL   Unsigned 32x32 multiply with 64-bit product
+SMLAL   Signed 32x32 multiply added to a 64-bit accumulated value
+UMLAL   Unsigned 32x32 multiply added to a 64-bit accumulated value
+```
+
+**Simple multiplications**
+
+```
+MUL r4, r2, r1      ; r4 = r2 * r1
+MULS r4, r2, r1     ; r4 = r2 * r1, then set the flags
+MLA r7, r8, r9, r3  ; r7 = r8 * r9 + r3
+```
+
+**Multiplication with SMULL and UMULL**
+
+```
+SMULL r4, r8, r2, r3    ; r4 = bits 31-0 of r2*r3
+                        ; r8 = bits 63-32 of r2*r3
+UMULL r6, r8, r0, r1    ; {r8,r6} = r0*r1
+```
+
+
