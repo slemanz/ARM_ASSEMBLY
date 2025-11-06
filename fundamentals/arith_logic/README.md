@@ -173,3 +173,21 @@ LSR ro, r2, #224        ; extract top byte from R2 into RO
 ORR r3, ro, r3, LSL #8  ; shift up r3 and insert r0
 ```
 
+## Basic Addition and Subtraction
+
+```
+ADD r1, r2, r3  ; r1 = r2 + r3
+ADC r1, r2, r3  ; r1 = r2 + r3 + C
+SUB r1, r2, r3  ; r1 = r2 - r3
+SUBC r1, r2, r3 ; r1 = r2 - r3 + C - 1
+RSB r1, r2, r3  ; r1 = r3 -r2
+RSC r1, r2, r3  ; r1 = r3 - r2 + C - 1
+```
+
+**Adding 64-bit integers:**
+
+```
+ADDS r4, r0, r2 ; adding the least significant words
+ADC r5, r1, r3  ; adding the most significant words
+```
+
