@@ -158,3 +158,18 @@ right end are wrapped around and inserted into the leftmost position.
 - **Rotate Right with Extend (RRX):** Shifts bits to the right by one position.
 The bit shifted off the right end is shifted into the carry flag, and the value
 of the carry flag is inserted into the leftmost position. 
+
+### Examples
+
+```
+LSL r4, r6, #4  ; r4 = r6 << 4 bits
+LSL r4, r6, r3  ; r4 = r6 << # specified in r3
+ROR r4, r6, #12 ; r4 = r6 rotated right 12 bits
+                ; r4 = ró rotated left 20 bits
+```
+
+```
+LSR ro, r2, #224        ; extract top byte from R2 into RO
+ORR r3, ro, r3, LSL #8  ; shift up r3 and insert r0
+```
+
