@@ -4,15 +4,8 @@
 .thumb
 
 .global __main
-.global Reset_Handler
-
-.word 0x20010000
-.word Reset_Handler
-
-        .section .text
 
 .thumb_func
-Reset_Handler:
 
 __main:
         mov r5, #0x10

@@ -3,7 +3,7 @@ ENTRY(Reset_Handler)
 _Min_Heap_Size = 0x400; /* required amount of heap */
 _Min_Stack_Size = 0x400; /* required amount of stack */
 
-_estack = ORIGIN(RAM) + LENGTH(RAM);
+_estack = ORIGIN(SRAM) + LENGTH(SRAM);
 
 MEMORY
 {
