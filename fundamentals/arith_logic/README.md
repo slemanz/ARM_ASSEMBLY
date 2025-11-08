@@ -273,3 +273,15 @@ than the divisor. The remaining dividend is the remainder.
 - Shifting and Subtraction: More efficient algorithms leverage bit shifting to
 perform division, similar to long division.
 
+### Run-time Library Functions
+
+Compilers and operating systems often provide run-time library functions for
+division, such as __aeabi_idiv (for integer division in the ARM Embedded
+Application Binary Interface). These functions handle the complexities of
+division, including potential edge cases like division by zero.
+
+```
+; Example: Call __aeabi_idiv to divide r0 by r1
+; r0 will contain the quotient after the call
+BL __aeabi_idiv
+```
