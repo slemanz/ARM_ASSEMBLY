@@ -228,3 +228,48 @@ LSL r1, r0, #2          ; r1 = r0*4
 ADD r0, r1, r1, LSL #2  ; r0 = r1 + r1*4
 RSB r0, r2, r2, LSL #3  ; r0 = r2*7
 ```
+
+## Division
+
+Modern ARM architectures include hardware divide instructions:
+
+- SDIV: Performs a signed 32-bit integer division.
+- UDIV: Performs an unsigned 32-bit integer division.
+
+These instructions take two registers as input (dividend and divisor) and store
+the quotient in a destination register. The result is typically rounded towards
+zero.
+
+```
+; Signed division: r0 = r1 / r2
+SDIV r0, r1, r2
+
+; Unsigned division: r0 = r1 / r2
+UDIV r0, r1, r2
+```
+
+### Software Division Algorithms
+
+When higher precision is required, division can be implemented in software using
+algorithms like:
+
+- Repeated Subtraction: This involves repeatedly subtracting the divisor from the
+dividend and incrementing a counter (the quotient) until the dividend is less
+than the divisor. The remaining dividend is the remainder.
+
+```
+    ; Example: Divide R1 by R2, store quotient in R0
+    MOV R0, #0       ; Initialize quotient to 0
+    .subtract_loop
+    CMP R1, R2       ; Compare dividend with divisor
+    BLT .end_subtract ; If dividend < divisor, end loop
+    SUB R1, R1, R2   ; Subtract divisor from dividend
+    ADD R0, R0, #1   ; Increment quotient
+    B .subtract_loop
+    .end_subtract
+    ; R0 now holds the quotient, R1 holds the remainder
+```
+
+- Shifting and Subtraction: More efficient algorithms leverage bit shifting to
+perform division, similar to long division.
+
