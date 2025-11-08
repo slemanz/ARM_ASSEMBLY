@@ -341,3 +341,7 @@ BFC r0, #4, #4
 
 After instruction
 - R0 0x000000D
+
+## Programs
+
+- [Find Max Value in an Array](find_max.s)
