@@ -285,3 +285,59 @@ division, including potential edge cases like division by zero.
 ; r0 will contain the quotient after the call
 BL __aeabi_idiv
 ```
+
+### Bit manipulation instruction
+
+ARM assembly provides a comprehensive set of instructions for bit manipulation,
+operating primarily on values within registers. These instructions facilitate
+various bitwise operations, bit field manipulation, and bit reversal.
+
+**Bit Field Manipulation:**
+
+- BFI (Bit Field Insert): Inserts a series of adjacent bits from the bottom of
+one register into a specified position within a destination register.
+- BFC (Bit Field Clear): Clears a series of adjacent bits within a register.
+- SBFX (Signed Bit Field Extract): Extracts a bit field from a register,
+sign-extends it, and places it into the least significant bits of another
+register.
+- UBFX (Unsigned Bit Field Extract): Extracts a bit field from a register,
+zero-extends it, and places it into the least significant bits of another
+register. 
+
+**Bit Reversal**
+
+- RBIT: Reverses the order of all bits within a register.
+
+**Syntax:**
+
+```
+BFI {<cond>} <Rd>, <Rn>, <#lsb>, <#width>
+SBFX{<cond>} <Rd>, <Rn>, <#lsb>, <#width>
+UBFX{<cond>} <Rd>, <Rn>, <#lsb>, <#width>
+
+BFC {<cond>} <Rd>, <#1sb>, <#width>
+
+RBIT {<cond>} <Rd>, <Rn>
+```
+
+Before instruction
+- R0 0xABCDDCВА
+- R1 0xFFFFFFFF
+
+```
+BFI r1, r0, #8, #8
+```
+
+After instruction
+- R0 0xABCDDCВА
+- R1 0xFFFFBAFF
+
+Before instruction
+- R0 0x000000DD
+
+```
+BFC r0, #4, #4
+```
+
+After instruction
+- R0 0x000000D
