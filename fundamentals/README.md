@@ -6,6 +6,7 @@
 - **[Load-Store Instructions](load_store/)**
 - **[Constants and Literals](constants_literals/)**
 - **[Arithmetic and Logic Instructions](arith_logic/)**
+- **[Branch and Loop Instructions](branch_loop/)**
 
 ## Important Notes
 
