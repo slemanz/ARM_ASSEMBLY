@@ -345,3 +345,4 @@ After instruction
 ## Programs
 
 - [Find Max Value in an Array](find_max.s)
+- [LSL Instruction](lsl_instruction.s)
