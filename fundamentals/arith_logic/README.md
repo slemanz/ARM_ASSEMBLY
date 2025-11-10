@@ -349,3 +349,4 @@ After instruction
 - [Adding Signed Numbers](adding_signed.s)
 - [Find Min Value in an Array](find_min.s)
 - [Solving a complex equation](complex_equation.s)
+- [Division by Subtraction](division_sub.s)
