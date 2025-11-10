@@ -348,3 +348,4 @@ After instruction
 - [LSL Instruction](lsl_instruction.s)
 - [Adding Signed Numbers](adding_signed.s)
 - [Find Min Value in an Array](find_min.s)
+- [Solving a complex equation](complex_equation.s)
