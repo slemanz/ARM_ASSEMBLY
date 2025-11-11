@@ -50,3 +50,55 @@ following the BL instruction) in the Link Register
 | LE    | Z set, N != V | Signed <= | 1101 |
 | AL    | Always    | Default       | 1110 |
 
+Example:
+
+```
+CMP r0, r1 
+BLT level2 ; jump to label level2 (r0 < r1)
+```
+
+### Compare and Branch
+
+In ARM assembly, comparing and branching typically involves two main types of
+instructions:
+
+1. **Comparison Instructions (e.g., CMP, CMN):**
+- These instructions perform an arithmetic or logical operation (like
+subtraction for CMP) on two operands and update the condition flags in the
+Current Program Status Register (CPSR).
+- They do not store the result of the operation in a register.
+- The condition flags (N, Z, C, V) indicate properties of the result, such as
+whether it's negative, zero, if a carry/borrow occurred, or if an overflow
+happened.
+
+2. **Branch Instructions (e.g., B, BEQ, BNE):**
+
+- These instructions alter the program's flow of execution by jumping to a
+specified label.
+- Unconditional branches: (B or BAL) always jump to the target label.
+- Conditional branches: (e.g., BEQ, BNE, BGT, BLT) only jump if a specific
+condition, determined by the state of the CPSR condition flags, is met.
+
+3. **Combined Instructions (e.g., CBZ, CBNZ):**
+
+- Modern ARM architectures (AArch64 and some Thumb-2) offer combined
+instructions like CBZ (Compare and Branch on Zero) and CBNZ (Compare and Branch
+on Non-Zero).
+- These instructions compare a register's value with zero and conditionally
+branch based on the result in a single instruction. They do not affect the
+condition flags.
+
+Examples:
+
+```
+CMP r2,#0 ; compare content of r2 and zero
+BEQ delay ; branch to delay if content of r2 equal zero
+```
+
+```
+CBZ r2, delay ; branch to delay if content of r2 equal zero
+```
+
+
+
+
