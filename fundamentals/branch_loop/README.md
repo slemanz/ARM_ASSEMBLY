@@ -32,3 +32,21 @@ if Greater Than), BLT (Branch if Less Than), etc.
 label and stores the return address (the address of the instruction immediately
 following the BL instruction) in the Link Register 
 
+| Field Mnemonic | Condition Flags | Meaning | Code |
+|---|---|---|---|
+| EQ    | Z set     | Equal         | 0000 |
+| NE    | Z clear   | Not equal     | 0001 |
+| CS/CH | C set     | Unsigned >=   | 0010 |
+| CC/LO | C clear   | Unsigned <    | 0011 |
+| MI    | N set     | Negative      | 0100 |
+| PL    | N clear   | Positive or zero | 0101 |
+| VS    | V set     | Overflow      | 0110 |
+| VC    | V clear   | No overflow   | 0111 |
+| HI    | C set and Z clear | Unsigned > |1000 |
+| LS    | C clear and Z set | Unsigned <= |1001 |
+| GE    | N >= V    | Signed >=     | 1010 |
+| LT    | N != V    | Signed <      | 1011 |
+| GT    | Z clear, N == V | Signed > | 1100 |
+| LE    | Z set, N != V | Signed <= | 1101 |
+| AL    | Always    | Default       | 1110 |
+
