@@ -99,6 +99,48 @@ BEQ delay ; branch to delay if content of r2 equal zero
 CBZ r2, delay ; branch to delay if content of r2 equal zero
 ```
 
+## Loops
+
+Loops in ARM assembly are typically implemented using a combination of
+conditional branches and a counter or condition check. Example: Simple Counter
+Loop.
+
+- While loop
+
+```C
+j = 100
+while(j != 0)
+{
+    // do something
+    j--;
+}
+```
+
+```
+    MOV r3, #0x64
+    B Test
+Loop
+    ; do something
+    SUB 3, 3, #1
+Test ; .. evaluate condition j = 0?
+    BNE Loop
+```
+
+Or
+
+```
+        MOV r3, #0x64
+Loop    CBZ r3, Exit
+        ; do something
+        SUB r3, #1;--
+        B Loop
+Exit
+```
+
+
+
+
+
 
 
 
