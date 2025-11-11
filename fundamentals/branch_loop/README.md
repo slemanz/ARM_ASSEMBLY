@@ -116,6 +116,8 @@ while(j != 0)
 }
 ```
 
+Equals to:
+
 ```
     MOV r3, #0x64
     B Test
@@ -137,7 +139,42 @@ Loop    CBZ r3, Exit
 Exit
 ```
 
+- For loop
 
+```C
+for (j=0; j<10;j++)
+{
+    //do something
+}
+```
+
+Equals to:
+
+```
+        MOV r1, #10 ; j=0
+Loop    CMP r1, #10 ; j<10?
+        BGE DONE    ; if j>=10, finish
+        .
+        .
+        .
+        ADD r1, r1, #1  ; j++
+        BNE Loop
+DONE
+```
+
+Or
+
+```
+        MOV r1, #10
+Loop    CMP r1, #10
+        .
+        .
+        .
+        SUB r1, r1, #1  ; j=j-1
+        BNE Loop        ; if j=0; finish
+DONE
+
+```
 
 
 
