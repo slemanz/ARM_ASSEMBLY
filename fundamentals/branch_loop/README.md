@@ -237,6 +237,6 @@ end_if:
 
 ## Examples Code
 
-- [Computing factorial](main.c)
+- [Computing factorial](main.s)
 
 
