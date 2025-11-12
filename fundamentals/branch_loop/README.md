@@ -176,8 +176,48 @@ DONE
 
 ```
 
+## Conditional Execution
 
+E.g. Testing a string for '1' and '?':
 
+```C
+if (char == '!' || char =='?') found++;
+```
+
+```
+TEQ r0, #'!'
+TEQNE r0, #'?'
+ADDEQ r1, r1, #1
+```
+
+E.g. Greatest common divisor (GCD)
+
+```C
+while (a != b)
+{
+    if (a > b) a = a - b;
+    else b = b - a;
+}
+```
+
+```
+gcd CMP r0, r1          ; a > b?
+    BEQ end                 ; if a = b we're done
+    BLT less                ; a < b branches
+    SUB r0, r0,r1           ; a = a-b
+    B gcd                   ; loop again
+Less SUB    r1,r1,r0    ; b = b-a
+    B gcd
+```
+
+or
+
+```
+gcd CMP     r0, r1
+    SUBGT   r0, r0, r1
+    SUBLT   r1, r1, r0
+    BNE gcd
+```
 
 
 
