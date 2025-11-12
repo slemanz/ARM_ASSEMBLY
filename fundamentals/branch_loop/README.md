@@ -219,5 +219,24 @@ gcd CMP     r0, r1
     BNE gcd
 ```
 
+## The IF-THEN Block
+
+In ARM assembly, an "if-then" block is implemented using the IT (If-Then)
+instruction for conditional execution, which makes up to four subsequent
+instructions conditional based on a condition code.
+
+```assembly
+CMP R0, #10     ; Compare R0 with 10
+BNE else_block  ; If not equal, branch to else_block
+                ; Code for the "then" block
+B end_if        ; Branch to the end of the if-else
+else_block:
+                ; Code for the "else" block
+end_if:
+```
+
+## Examples Code
+
+- [Computing factorial](main.c)
 
 
