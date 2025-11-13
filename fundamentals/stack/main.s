@@ -9,6 +9,14 @@
 
 
 __main:
+        ldr r3, =0xDEADBEFF
+        ldr r4, =0xBABEFACE
+
+        push {r3}
+        push {r4}
+
+        pop {r5}
+        pop {r6}
 
 stop:
         b   stop

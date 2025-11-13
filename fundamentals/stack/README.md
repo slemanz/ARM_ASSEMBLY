@@ -72,3 +72,5 @@ POP {r0, r1}          ; Pops values from the stack into r0 and r1.
 POP {r0-r3, pc}       ; Pops values into r0-r3 and then branches to the address loaded into pc.
 ```
 
+- **[Pushing and Popping](main.s)**
+
