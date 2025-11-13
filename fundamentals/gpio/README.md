@@ -17,3 +17,5 @@ MCUs GPIO modules have at least 2 registers:
 - On-Chip RC Oscillator: Least precise
 - Externally Connected Crystal: Most precise
 - Phase Locked Loop (PLL): Programmable
+
+- **[main.s](main.s)**
