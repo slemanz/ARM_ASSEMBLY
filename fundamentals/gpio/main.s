@@ -6,10 +6,12 @@
 .equ    GPIOA_BASE,         0x40020000
 
 .equ    MODER_OFFSET,       0x00
+.equ    IDR_OFFSET,         0x10
 .equ    ODR_OFFSET,         0x14
 .equ    BSRR_OFFSET,        0x18
 
 .equ    GPIOA_MODER,        (GPIOA_BASE + MODER_OFFSET)
+.equ    GPIOA_IDR,          (GPIOA_BASE + IDR_OFFSET)
 .equ    GPIOA_ODR,          (GPIOA_BASE + ODR_OFFSET)
 .equ    GPIOA_BSRR,         (GPIOA_BASE + BSRR_OFFSET)
 
