@@ -20,5 +20,6 @@ MCUs GPIO modules have at least 2 registers:
 
 ### Drivers
 
-- **[blinky](blinky.s)**
-- **[blinky bsrr](blinky_bsrr.s)**
+- **[Blinky](blinky.s)**
+- **[Blinky bsrr](blinky_bsrr.s)**
+- **[Button](button.s)**
