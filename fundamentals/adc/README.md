@@ -57,3 +57,16 @@ software.
 Example use case:
 
 For synchronizing the conversion of channels to an event
+
+## Resolution
+
+| n-bit | Number of Steps   | Step Size |
+| ---   | ---               | ---       |
+| 8-bit | 256               | 5v/256 = 19.53mV |
+| 10-bit | 1024             | 5v/1024 = 4.88mV |
+| 12-bit | 4096             | 5v/4096 = 1.2mV |
+| 16-bit | 65,536           | 5v/65,536 = 0.076mV |
+
+---
+
+## Example code:
