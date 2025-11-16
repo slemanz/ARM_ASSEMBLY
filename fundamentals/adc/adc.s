@@ -64,16 +64,47 @@
         .section .text
         .global __main
 
-__main:
-
-/* adc_init: */
+adc_init:
         /* 1. Enable clock access to ADC pin's GPIO port */
+        ldr r0, =RCC_AHB1ENR
+        ldr r1, [r0]
+        orr r1, #GPIOA_EN
+        str r1, [r0]
+
         /* 2. Set ADC pin, PA as analog pin */
+        ldr r0, =GPIOA_MODER
+        ldr r1, [r0]
+        orr r1, #MODER1_ANLG_SLT
+        str r1, [r0]
+
         /* 3. Enable clock access to the ADC */
+        ldr r0, =RCC_APB2ENR
+        ldr r1, [r0]
+        orr r1, #ADC1_EN
+        str r1, [r0]
+
         /* 4. select software trigger */
+        ldr r0, =ADC1_CR2
+        ldr r1, =0x00000000
+        ldr r1, [r0]
+
         /* 5. Set conversion sequence starting channel */
+        ldr r0, =ADC1_SQR3
+        ldr r1, =#SQR3_CNF
+        str r1, [r0]
+
         /* 6. Set conversion sequence length */
-        /* Enable adc module */
+        ldr r0, =ADC1_SQR1
+        ldr r1, =#SQR1_CNF
+        str r1, [r0]
+
+        /* 7. Enable adc module */
+        ldr r0, =ADC1_CR2
+        ldr r1, [r0]
+        orr r1, #CR2_ADCON
+        str r1, [r0]
+
+        bx lr
 
 /* adc_read: */
         /* 1. Start conversion */
