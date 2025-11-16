@@ -70,3 +70,6 @@ For synchronizing the conversion of channels to an event
 ---
 
 ## Example code:
+
+- [main.c](main.c)
+- [adc.s](adc.s)

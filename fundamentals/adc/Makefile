@@ -23,6 +23,7 @@ OBJCOPY=arm-none-eabi-objcopy
 ############################################
 
 OBJS		+= $(BUILD_DIR)/main.o
+OBJS		+= $(BUILD_DIR)/adc.o
 OBJS		+= $(BUILD_DIR)/startup.o
 
 
@@ -32,6 +33,9 @@ all: $(PREREQ) $(BUILD_DIR)/$(TARGET).elf
 
 $(PREREQ):
 	mkdir $(PREREQ)
+
+$(BUILD_DIR)/%.o: $(ROOT_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(BUILD_DIR)/$(*).o $(ROOT_DIR)/$(*).c
 
 $(BUILD_DIR)/%.o: $(ROOT_DIR)/%.s
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(BUILD_DIR)/$(*).o $(ROOT_DIR)/$(*).s
