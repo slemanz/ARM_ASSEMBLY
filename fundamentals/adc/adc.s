@@ -106,10 +106,26 @@ adc_init:
 
         bx lr
 
-/* adc_read: */
+adc_read:
         /* 1. Start conversion */
+        ldr r0, =ADC1_CR2
+        ldr r1, [r0]
+        orr r1, #CR2_SWSTART
+        str r1, [r0]
+
         /* 2. Wait for the conversion to be complete */
+lp1:
+        ldr r0, =ADC1_SR
+        ldr r1, [r0]
+        and r1, #SR_EOC
+        cmp r1, #0x00
+        beq lp1
+
         /* 3. Read content of ADC data register */
+        ldr r2, =ADC1_DR
+        ldr r0, [r2]
+        bx lr
+
 
 stop:
         b stop
