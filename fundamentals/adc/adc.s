@@ -66,7 +66,12 @@
         .thumb
 
         .section .text
-        .global __main
+        .global adc_init
+        .global adc_read
+        .global led_init
+        .global turn_led_on
+        .global turn_led_off
+        .global led_control
 
 adc_init:
         /* 1. Enable clock access to ADC pin's GPIO port */
@@ -90,7 +95,7 @@ adc_init:
         /* 4. select software trigger */
         ldr r0, =ADC1_CR2
         ldr r1, =0x00000000
-        ldr r1, [r0]
+        str r1, [r0]
 
         /* 5. Set conversion sequence starting channel */
         ldr r0, =ADC1_SQR3
@@ -145,15 +150,21 @@ led_init:
         bx lr
     
 led_control:
-    ldr r1, =SENS_THRESH
-    cmp r0, r1
-    bgt turn_led_on // Branch to turn turn_led_on if adc value is greater than SENS_THRESH
-    bgt turn_led_off // Branch to turn turn_led_off if adc value is less than SENS_THRESH
-    bx lr
+        ldr r1, =SENS_THRESH
+        cmp r0, r1
+        bgt turn_led_on // Branch to turn turn_led_on if adc value is greater than SENS_THRESH
+        bgt turn_led_off // Branch to turn turn_led_off if adc value is less than SENS_THRESH
+        bx lr
 
 turn_led_on:
         ldr r5, =GPIOA_BSRR
         mov r1, #BSRR_5_SET
+        str r1, [r5]
+        bx lr
+
+turn_led_off:
+        ldr r5, =GPIOA_BSRR
+        mov r1, #BSRR_5_RESET
         str r1, [r5]
         bx lr
 
