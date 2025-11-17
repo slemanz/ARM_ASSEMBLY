@@ -139,6 +139,13 @@ led_init:
         orr r1, #MODER5_OUT
         str r1, [r0]
         bx lr
+    
+led_control:
+    ldr r1, =SENS_THRESH
+    cmp r0, r1
+    bgt turn_led_on // Branch to turn turn_led_on if adc value is greater than SENS_THRESH
+    bgt turn_led_off // Branch to turn turn_led_off if adc value is less than SENS_THRESH
+    bx lr
 
 
 stop:
