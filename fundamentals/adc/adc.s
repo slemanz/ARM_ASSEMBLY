@@ -15,8 +15,8 @@
 .equ ADC1_CR2_OFFSET,       0x08
 .equ ADC1_CR2,              (ADC1_BASE + ADC1_CR2_OFFSET)
 
-.equ ADC1_SQR3_OFFSET       0x34
-.equ ADC1_SQR3,             (ADC1_BASE + ADC1_SQR3)
+.equ ADC1_SQR3_OFFSET,      0x34
+.equ ADC1_SQR3,             (ADC1_BASE + ADC1_SQR3_OFFSET)
 
 .equ ADC1_SQR1_OFFSET,      0x2C
 .equ ADC1_SQR1,             (ADC1_BASE + ADC1_SQR1_OFFSET)
@@ -36,7 +36,7 @@
 
 
 .equ GPIOA_EN,              (1 << 0)
-.equ ADC1_EN                (1 << 8)
+.equ ADC1_EN,               (1 << 8)
 .equ SQR3_CNF,              1  /*Conversion sequence starts at ch1*/
 .equ SQR1_CNF,              0  /*Conversion sequence length to 1*/
 .equ CR2_ADCON,             (1 << 0)
@@ -124,6 +124,20 @@ lp1:
         /* 3. Read content of ADC data register */
         ldr r2, =ADC1_DR
         ldr r0, [r2]
+        bx lr
+
+led_init:
+        /* Enable clock access to GPIOA */
+        ldr r0, =RCC_AHB1ENR
+        ldr r1, [r0]
+        orr r1, #GPIOA_EN
+        str r1, [r0]
+
+        /* Set PA5 as output pin */
+        ldr r0, =GPIOA_MODER
+        ldr r1, [r0]
+        orr r1, #MODER5_OUT
+        str r1, [r0]
         bx lr
 
 
