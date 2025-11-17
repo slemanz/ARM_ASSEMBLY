@@ -30,8 +30,12 @@
 .equ MODER_OFFSET,          0x00
 .equ GPIOA_MODER,           (GPIOA_BASE + MODER_OFFSET)
 
-.equ BSRR_OFFSET,           0x14
+.equ ODR_OFFSET,            0x14
 .equ GPIOA_ODR,             (GPIOA_BASE + ODR_OFFSET)
+
+.equ BSRR_OFFSET,           0x18
+.equ GPIOA_BSRR,           (GPIOA_BASE + BSRR_OFFSET)
+
 
 
 
@@ -146,6 +150,12 @@ led_control:
     bgt turn_led_on // Branch to turn turn_led_on if adc value is greater than SENS_THRESH
     bgt turn_led_off // Branch to turn turn_led_off if adc value is less than SENS_THRESH
     bx lr
+
+turn_led_on:
+        ldr r5, =GPIOA_BSRR
+        mov r1, #BSRR_5_SET
+        str r1, [r5]
+        bx lr
 
 
 stop:
