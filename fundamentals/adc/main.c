@@ -4,6 +4,7 @@ extern void adc_init(void);
 extern uint32_t adc_read(void);
 extern void led_init(void);
 extern void led_control(void);
+extern void turn_led_on(void);
 
 uint32_t sensor_value;
 
