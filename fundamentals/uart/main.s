@@ -5,6 +5,9 @@
 .equ    RCC_AHB1ENR,        (RCC_BASE + AHB1ENR_OFFSET)
 .equ    GPIOA_BASE,         0x40020000
 
+.equ    APB1ENR_OFFSET,     0x40
+.equ    RCC_APB1ENR,        (RCC_BASE + APB1ENR_OFFSET)
+
 .equ    MODER_OFFSET,       0x00
 .equ    PUPDR_OFFSET,       0x0C
 .equ    IDR_OFFSET,         0x10
@@ -43,6 +46,21 @@
         .global __main
 
 __main:
+
+/* uart_init: */
+        /* 1. Enable clock access to UART GPIO pins */
+        /* 2. Set UART gpio pin mode to alternate function mode */
+        /* 3. Set UART gpio pin alternate funtion type to UART */
+        /* 4. Enable clock access to UART2 module */
+        /* 5. Set UART baudrate */
+        /* 6. Configure control register 1 */
+        /* 7. Configure control register 2 */
+        /* 8. Configure control register 3 */
+        /* 9. Enable UART module */
+
+/* uart_outchar: */
+        /* 1. Make sure UART transmit fifo is not full */
+        /* 2. Write data into uart data register */
 
 stop:
         b stop

@@ -44,3 +44,6 @@ checking.
 8-bits or 9-bits.
 - Hardware Flow Control: Specifies whether Hardware Flow Control is enabled or
 disabled.
+
+## Code
+
