@@ -114,11 +114,38 @@ uart_init:
         str r1, [r0]
 
         /* 4. Enable clock access to UART2 module */
+        ldr r0, =RCC_APB1ENR
+        ldr r1, [r0]
+        orr r1, #USART2_EN
+        str r1, [r0]
+
         /* 5. Set UART baudrate */
+        ldr r0, =UART2_BRR
+        mov r1, #BRR_CNF
+        str r1, [r0]
+
         /* 6. Configure control register 1 */
+        ldr r0, =UART2_CR1
+        mov r1, #CR1_CNF
+        str r1, [r0]
+
         /* 7. Configure control register 2 */
+        ldr r0, =UART2_CR2
+        mov r1, #CR2_CNF
+        str r1, [r0]
+
         /* 8. Configure control register 3 */
+        ldr r0, =UART2_CR3
+        mov r1, #CR3_CNF
+        str r1, [r0]
+
         /* 9. Enable UART module */
+        ldr r0, UART2_CR1
+        ldr r1, [r0]
+        orr r1, #CR1_UARTEN
+        str r1, [r0]
+
+        bx lr
 
 /* uart_outchar: */
         /* 1. Make sure UART transmit fifo is not full */
