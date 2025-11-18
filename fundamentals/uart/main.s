@@ -13,20 +13,47 @@
 .equ    IDR_OFFSET,         0x10
 .equ    ODR_OFFSET,         0x14
 .equ    BSRR_OFFSET,        0x18
+.equ    AFRL_OFFSET,        0x20
 
 .equ    GPIOA_MODER,        (GPIOA_BASE + MODER_OFFSET)
 .equ    GPIOA_PUPDR,        (GPIOA_BASE + PUPDR_OFFSET)
 .equ    GPIOA_IDR,          (GPIOA_BASE + IDR_OFFSET)
 .equ    GPIOA_ODR,          (GPIOA_BASE + ODR_OFFSET)
 .equ    GPIOA_BSRR,         (GPIOA_BASE + BSRR_OFFSET)
+.equ    GPIOA_AFRL,         (GPIOA_BASE + AFRL_OFFSET)
+
+
 
 .equ    UART2_BASE,         0x40004400
+
+.equ    CR1_OFFSET,         0x0C
+.equ    CR2_OFFSET,         0x10
+.equ    CR3_OFFSET,         0x14
+.equ    BRR_OFFSET,	        0x08
+.equ    SR_OFFSET,          0x00
+.equ    DR_OFFSET,          0x04
+
+.equ    UART2_CR1,          (UART2_BASE	+ CR1_OFFSET)
+.equ    UART2_CR2,          (UART2_BASE	+ CR2_OFFSET)
+.equ    UART2_CR3,          (UART2_BASE	+ CR3_OFFSET)
+.equ    UART2_BRR,          (UART2_BASE	+ BRR_OFFSET)
+.equ    UART2_SR,           (UART2_BASE	+ SR_OFFSET)
+.equ    UART2_DR,           (UART2_BASE	+ DR_OFFSET)
+
+
+.equ    GPIOA_EN,           (1 << 0)
+.equ    USART2_EN,          (1 << 17)
 
 .equ MODER2_ALT_SLT,        (1<<5)
 .equ AF7_SLT,               0x700  // 0b 0111 0000 000
 
+.equ    BRR_CNF,            0x683       // 9600 baudrate @16Mhz
+.equ    CR1_CNF,            0x0008      /* Enable TX, 8-bit data*/
+.equ    CR2_CNF,            0x0000      /* 1 stop bit*/
+.equ    CR3_CNF,            0x0000      /* no flow control*/
+.equ    CR1_UARTEN,         (1 << 13)   /* enable uart*/
+.equ    SR_TXE,             (1 << 7)
 
-.equ    GPIOA_EN,           (1 << 0)
 .equ    MODER5_OUT,         (1 << 10)
 .equ    PUPDR6_PU,          (1 << 12)
 .equ    LED_ON,             (1U << 5)
