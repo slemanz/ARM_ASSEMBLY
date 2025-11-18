@@ -20,6 +20,11 @@
 .equ    GPIOA_ODR,          (GPIOA_BASE + ODR_OFFSET)
 .equ    GPIOA_BSRR,         (GPIOA_BASE + BSRR_OFFSET)
 
+.equ    UART2_BASE,         0x40004400
+
+.equ MODER2_ALT_SLT,        (1<<5)
+.equ AF7_SLT,               0x700  // 0b 0111 0000 000
+
 
 .equ    GPIOA_EN,           (1 << 0)
 .equ    MODER5_OUT,         (1 << 10)
@@ -46,11 +51,41 @@
         .global __main
 
 __main:
+        bl uart_init
 
-/* uart_init: */
+uart_init:
         /* 1. Enable clock access to UART GPIO pins */
+        ldr r0, =RCC_AHB1ENR
+        ldr r1, [r0]
+        orr r1, GPIOA_EN
+        str r1, [r0]
+
         /* 2. Set UART gpio pin mode to alternate function mode */
+        // GPIOA->MODER &= ~0x30
+        ldr r0, GPIOA_MODER
+        ldr r1, [r0]
+        bic r1, #0x30
+        str r1, [r0]
+
+        // GPIOA->MODER |= (1U << 5)
+        ldr r0, =GPIOA_MODER
+        ldr r1, [r0]
+        orr r1, #MODER2_ALT_SLT
+        str r1, [r0]
+
         /* 3. Set UART gpio pin alternate funtion type to UART */
+        // GPIOA->AFR[0] &= ~0xF00
+        ldr r0, =GPIOA_AFRL
+        ldr r1, [r0]
+        bic r1, 0xF00
+        str r1, [r0]
+
+        // GPIOA->AFR[0] |= 0x700
+        ldr r0, =GPIOA_AFRL
+        ldr r1, [r0]
+        orr r1, #AF7_SLT
+        str r1, [r0]
+
         /* 4. Enable clock access to UART2 module */
         /* 5. Set UART baudrate */
         /* 6. Configure control register 1 */
