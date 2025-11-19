@@ -147,9 +147,21 @@ uart_init:
 
         bx lr
 
-/* uart_outchar: */
+uart_outchar: 
         /* 1. Make sure UART transmit fifo is not full */
+        ldr r1, =UART2_SR
+
+lp2:
+        ldr r2, [r1]
+        and r2, #SR_TXE
+        cmp r2, 0x00
+        beq lp2
+
         /* 2. Write data into uart data register */
+        mov r1, r0
+        ldr r2, =UART2_DR
+        str r1, [r2]
+        bx lr
 
 stop:
         b stop
