@@ -84,18 +84,6 @@
 __main:
         bl uart_init
 
-        mov r0, #'Y'
-        bl uart_outchar
-
-        mov r0, #'e'
-        bl uart_outchar
-
-        mov r0, #'s'
-        bl uart_outchar
-
-        b stop
-
-
 uart_init:
         /* 1. Enable clock access to UART GPIO pins */
         ldr r0, =RCC_AHB1ENR
@@ -104,29 +92,50 @@ uart_init:
         str r1, [r0]
 
         /* 2. Set UART gpio pin mode to alternate function mode */
-        // GPIOA->MODER &= ~0x30
+
+        /*Set PA2 mode as ALT*/
         ldr r0, =GPIOA_MODER
         ldr r1, [r0]
         bic r1, #0x30
         str r1, [r0]
 
-        // GPIOA->MODER |= (1U << 5)
         ldr r0, =GPIOA_MODER
         ldr r1, [r0]
         orr r1, #MODER2_ALT_SLT
         str r1, [r0]
 
+        /*Set PA3 mode as ALT*/
+        ldr r0, =GPIOA_MODER
+        ldr r1, [r0]
+        bic r1, #0xC0
+
+        ldr r0, =GPIOA_MODER
+        ldr r1, [r0]
+        orr r1, #MODER3_ALT_SLT
+        str r1, [r0]
+
         /* 3. Set UART gpio pin alternate funtion type to UART */
-        // GPIOA->AFR[0] &= ~0xF00
+
+        /*Set PA2 ALT type to AF7*/
         ldr r0, =GPIOA_AFRL
         ldr r1, [r0]
         bic r1, 0xF00
         str r1, [r0]
 
-        // GPIOA->AFR[0] |= 0x700
         ldr r0, =GPIOA_AFRL
         ldr r1, [r0]
-        orr r1, #AF7_SLT
+        orr r1, #PIN2_AF7_SLT
+        str r1, [r0]
+
+        /*Set PA3 ALT type to AF7*/
+        ldr r0, =GPIOA_AFRL
+        ldr r1, [r0]
+        orr r1, [r0]
+        str r1, [r0]
+
+        ldr r0, =GPIOA_AFRL
+        ldr r1, [r0]
+        orr r1, #PIN3_AF7_SLT
         str r1, [r0]
 
         /* 4. Enable clock access to UART2 module */
