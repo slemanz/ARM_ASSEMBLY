@@ -84,6 +84,11 @@
 __main:
         bl uart_init
 
+uart_loop:
+        bl uart_readchar
+        bl uart_outchar
+        b uart_loop
+
 uart_init:
         /* 1. Enable clock access to UART GPIO pins */
         ldr r0, =RCC_AHB1ENR
@@ -130,7 +135,7 @@ uart_init:
         /*Set PA3 ALT type to AF7*/
         ldr r0, =GPIOA_AFRL
         ldr r1, [r0]
-        orr r1, [r0]
+        bic r1, #0xF000
         str r1, [r0]
 
         ldr r0, =GPIOA_AFRL
@@ -150,8 +155,10 @@ uart_init:
         str r1, [r0]
 
         /* 6. Configure control register 1 */
+        /*Enable uart rx*/
         ldr r0, =UART2_CR1
         mov r1, #CR1_CNF
+        orr r1, #CR1_RE
         str r1, [r0]
 
         /* 7. Configure control register 2 */
@@ -171,6 +178,20 @@ uart_init:
         str r1, [r0]
 
         bx lr
+
+uart_readchar:
+        ldr r1, =UART2_SR
+
+lp1:
+        ldr r2, [r1]
+        and r2, #SR_RXNE
+        cmp r2, #0x00
+        beq lp1
+
+        ldr r3, =UART2_DR
+        ldr r0, [r3]
+        bx lr
+
 
 uart_outchar: 
         /* 1. Make sure UART transmit fifo is not full */
