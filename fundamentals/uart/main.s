@@ -44,15 +44,19 @@
 .equ    GPIOA_EN,           (1 << 0)
 .equ    USART2_EN,          (1 << 17)
 
-.equ MODER2_ALT_SLT,        (1<<5)
-.equ AF7_SLT,               0x700  // 0b 0111 0000 000
+.equ MODER2_ALT_SLT,        (1 << 5)
+.equ MODER3_ALT_SLT,        (1 << 7)
+.equ PIN2_AF7_SLT,          0x700
+.equ PIN3_AF7_SLT,          0x7000
 
 .equ    BRR_CNF,            0x683       // 9600 baudrate @16Mhz
 .equ    CR1_CNF,            0x0008      /* Enable TX, 8-bit data*/
 .equ    CR2_CNF,            0x0000      /* 1 stop bit*/
 .equ    CR3_CNF,            0x0000      /* no flow control*/
 .equ    CR1_UARTEN,         (1 << 13)   /* enable uart*/
+.equ    CR1_RE,             (1 << 2)   /* enable uart*/
 .equ    SR_TXE,             (1 << 7)
+.equ    SR_RXNE,            (1 << 5)
 
 .equ    MODER5_OUT,         (1 << 10)
 .equ    PUPDR6_PU,          (1 << 12)
