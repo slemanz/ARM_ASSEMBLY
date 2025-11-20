@@ -11,6 +11,7 @@
 - **[GPIO Driver](gpio/)**
 - **[ADC Driver](adc/)**
 - **[UART Driver](uart/)**
+- **[Systick Driver](systick/)**
 
 ## Important Notes
 
