@@ -50,3 +50,6 @@ disabled.
 - [Uart TX](uart_tx.s)
 - [Uart RX](uart_rx.s)
 
+- [main.c](main.c)
+- [uart.s](uart.s)
+

@@ -10,9 +10,9 @@ LINKER= -T $(ROOT_DIR)/STM32F411.ld
 MAP_FILE= -Wl,-Map=$(BUILD_DIR)/$(TARGET).map
 
 CFLAGS= -c $(MACH) -mthumb $(FLOAT) -std=gnu99 -Wall -O0 \
-		-nostdlib -ffunction-sections -fdata-sections
+		--specs=nano.specs -ffunction-sections -fdata-sections
 
-LDFLAGS = $(MACH) -mthumb $(FLOAT) -nostdlib $(LINKER) $(MAP_FILE) \
+LDFLAGS = $(MACH) -mthumb $(FLOAT) --specs=nosys.specs $(LINKER) $(MAP_FILE) \
 			-Wl,--gc-sections -static --specs=nano.specs -Wl,--start-group -lc -lm \
 			-Wl,--end-group -Wl,--print-memory-usage
 
@@ -23,7 +23,9 @@ OBJCOPY=arm-none-eabi-objcopy
 ############################################
 
 OBJS		+= $(BUILD_DIR)/main.o
+OBJS		+= $(BUILD_DIR)/uart.o
 OBJS		+= $(BUILD_DIR)/startup.o
+OBJS		+= $(BUILD_DIR)/syscalls.o
 
 
 PREREQ = $(BUILD_DIR)/
@@ -35,6 +37,9 @@ $(PREREQ):
 
 $(BUILD_DIR)/%.o: $(ROOT_DIR)/%.s
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(BUILD_DIR)/$(*).o $(ROOT_DIR)/$(*).s
+
+$(BUILD_DIR)/%.o: $(ROOT_DIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(BUILD_DIR)/$(*).o $(ROOT_DIR)/$(*).c
 
 # TARGET ELF
 $(BUILD_DIR)/$(TARGET).elf: $(OBJS) 
