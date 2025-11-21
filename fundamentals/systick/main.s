@@ -55,6 +55,7 @@ __main:
         bl      systick_init
 
 loop:
+        bl      blink
         b       loop
 
 gpioa_init:
@@ -128,7 +129,20 @@ cmplt:
         pop   {r4,lr}  /* restore previous values of r4 and lr */
         bx lr
 
+blink:
+        mov r1, #LED_ON
+        str r1, [r2]
 
+        ldr r0, =500
+        bl systick_delay_ms
+
+        mov r1, #LED_OFF
+        str r1, [r2]
+
+        ldr r0, =500
+        bl systick_delay_ms
+
+        b blink
 
 
 
