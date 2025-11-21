@@ -2,6 +2,10 @@
 .equ    RCC_BASE,           0x40023800
 .equ    AHB1ENR_OFFSET,     0x30
 
+.equ APB1ENR_OFFSET,        0x40
+.equ RCC_APB1ENR,           (RCC_BASE + APB1ENR_OFFSET)
+
+
 .equ    RCC_AHB1ENR,        (RCC_BASE + AHB1ENR_OFFSET)
 .equ    GPIOA_BASE,         0x40020000
 
@@ -18,7 +22,27 @@
 .equ    GPIOA_BSRR,         (GPIOA_BASE + BSRR_OFFSET)
 
 
-.equ    GPIOA_EN,           (1 << 0)
+.equ TIM2_BASE,				0x40000000
+
+
+.equ CR1_OFFSET,            0x00
+.equ PSC_OFFSET,            0x28
+.equ ARR_OFFSET,            0x2C
+.equ CNT_OFFSET,            0x24
+.equ SR_OFFSET,             0x10
+
+.equ TIM2_PSC,              (TIM2_BASE  + PSC_OFFSET)
+.equ TIM2_ARR,              (TIM2_BASE  + ARR_OFFSET)
+.equ TIM2_CNT,              (TIM2_BASE  + CNT_OFFSET)
+.equ TIM2_CR1,              (TIM2_BASE  + CR1_OFFSET)
+.equ TIM2_SR,               (TIM2_BASE  + SR_OFFSET)
+
+.equ GPIOA_EN,              (1 << 0)
+.equ TIM2_EN,               (1 << 0)
+.equ CR1_CEN,               (1 << 0)
+.equ SR_UIF,                (1 << 0)
+
+
 .equ    MODER5_OUT,         (1 << 10)
 .equ    PUPDR6_PU,          (1 << 12)
 .equ    LED_ON,             (1U << 5)
@@ -28,7 +52,6 @@
 .equ BSRR_5_SET,            (1 << 5)
 .equ BSRR_5_RESET,          (1 << 21)
 
-// active low switch
 .equ    BTN_ON,             0x0000
 .equ    BTN_OFF,            0x0040
 .equ    BTN_PIN,            0x0040
@@ -44,45 +67,17 @@
 
 __main:
         bl      gpio_init
+        bl      tim2_1hz_init
 
 loop:
-        bl      get_input
-        cmp     r0, #BTN_ON
-        beq     turn_led_on
-        cmp     r0, #BTN_OFF
-        beq     turn_led_off
         b       loop
 
-
-
-
-turn_led_on:
-        mov     r1, #0
-        ldr     r2, =GPIOA_BSRR
-        mov     r1, #BSRR_5_SET
-        str     r1, [r2]
-
-turn_led_off:
-        mov     r1, #0
-        ldr     r2, =GPIOA_BSRR
-        mov     r1, #BSRR_5_RESET
-        str     r1, [r2]
-
-get_input:
-        ldr     r1, =GPIOA_IDR
-        ldr     r0, [r1]
-        and     r0, r0, #BTN_PIN
-        bx      lr
     
 gpio_init:
-        /* Set PA5 as output */
         /* ENABLE CLOCK ACCESS TO GPIOA */
         ldr r0, =RCC_AHB1ENR
-
         ldr r1, [r0]
-
         orr r1, #GPIOA_EN
-
         str r1, [r0]
 
         // set PA5 as output
@@ -90,13 +85,6 @@ gpio_init:
         ldr r1, [r0]
         orr r1, #MODER5_OUT
         str r1, [r0]
-
-        // set PA6 as input
-        ldr r0, =GPIOA_PUPDR
-        ldr r1, [r0]
-        orr r1, #PUPDR6_PU
-        str r1, [r0]
-        bx  lr
 
 stop:
         b stop
