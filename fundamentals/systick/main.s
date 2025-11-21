@@ -99,6 +99,36 @@ systick_init:
 
         bx lr
 
+        /*Takes number clock cycles to delay as argument
+        r0 is argument register*/
+
+systick_delay:
+        ldr r1, =NVIC_ST_RELOAD_R
+        sub r0, #1
+        str r0, [r1]
+
+lp1: 
+        /* Check if timeout has occured */
+        ldr r1, =NVIC_ST_CTRL_R
+        ldr r3, [r1]
+        ands r3, r3, #ST_CTRL_COUNTFLG
+        beq lp1
+        bx lr
+
+systick_delay_ms:
+        push {r4, lr} /* Save current value of r4 and lr */
+        movs r4, r0
+        beq cmplt
+lp2:
+        ldr r0, =DELAY1MS
+        bl systick_delay
+        subs r4, r4, #1
+        bhi lp2 /* if r4>0 delay another 1ms */
+cmplt:
+        pop   {r4,lr}  /* restore previous values of r4 and lr */
+        bx lr
+
+
 
 
 
