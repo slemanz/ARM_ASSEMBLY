@@ -69,9 +69,67 @@ __main:
         bl      gpio_init
         bl      tim2_1hz_init
 
+        bl      led_blinky
+
 loop:
         b       loop
 
+tim2_1hz_init:
+        /* 1. Enable Clock access to TIM2 */
+        ldr     r0, =RCC_APB1ENR
+        ldr     r1, [r0]
+        orr     r1, #TIM2_EN
+        str     r1, [r0]
+
+        /* 2. Set prescaler value */
+        ldr     r0, =TIM2_PSC
+        mov     r1, #1599   /* divide 16 000 000 by  1600 = 10 000 */
+        str     r1, [r0]
+
+        /* 3. Set the auto-reload value */
+        ldr     r0, =TIM2_ARR
+        mov     r1, #9999  /* divide 10000 by 10000*/
+        str     r1, [r0]
+
+        /* 4. Clear timer counter */
+        ldr     r0, =TIM2_CNT
+        mov     r1, #0
+        str     r1, [r0]
+
+        /* 5. Enable timer */
+        ldr     r0, =TIM2_CR1
+        mov     r1, #CR1_CEN
+        str     r1, [r0]
+        bx      lr
+
+__wait:
+        /* wait for UIF flag to be set */
+        ldr     r1, =TIM2_SR
+lp1:
+        ldr     r2, [r1]    /* while(!(TIM2-SR & (1u<<0))){} */
+        and     r2, #SR_UIF
+        cmp     r2, #0x00
+        beq     lp1
+
+        /* Clear UIF */
+        ldr     r3, [r1]
+        bic     r3, r3, #SR_UIF
+        str     r3, [r1]
+
+        bx      lr
+
+led_blinky:
+        ldr     r4, =GPIOA_BSRR
+        mov     r1, #BSRR_5_SET
+        str     r1, [r4]
+        bl      __wait
+
+        ldr     r4, =GPIOA_BSRR
+        mov     r1, #BSRR_5_RESET
+        str     r1, [r4]
+        bl      __wait
+
+        bl      led_blinky
     
 gpio_init:
         /* ENABLE CLOCK ACCESS TO GPIOA */
@@ -85,6 +143,8 @@ gpio_init:
         ldr r1, [r0]
         orr r1, #MODER5_OUT
         str r1, [r0]
+
+        bx  lr
 
 stop:
         b stop
