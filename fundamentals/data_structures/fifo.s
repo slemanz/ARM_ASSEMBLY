@@ -28,3 +28,32 @@ fifo_init:
         str     r0, [r1]
 
         bx lr
+
+/*
+    R0 has data to be put into fifo
+    R0 has return value, 1 for success
+    and 0 for failure
+ */
+ fifo_put:
+        ldr     r1, =putPt_addr
+        ldr     r2, [r1]
+        add     r3, r2, #1
+        ldr     r12, =fifo_end_addr
+        cmp     r3, r12             /* Check if end of fifo is reached */
+        bne     proceed_with_put    /* if not end proceed, do not wrap around */
+
+        ldr     r3, =fifo_addr      /* wrap around, meaning set position to starting point */
+
+proceed_with_put:
+        ldr     r12, =getPt_addr
+        ldr     r12, [r12]
+        cmp     r3, r12 
+        bne     _not_full
+        mov     r0, #0          /* Failure */
+        bx      lr
+
+_not_full:
+        strb    r0, [r2]        /* Save data */
+        str     r3, [r1]        /* Update putPt */
+        mov     r0, #1          /* Success */
+        bx      lr
