@@ -19,6 +19,18 @@ volatile uint32_t rx_put_itr;
 volatile uint32_t tx_get_itr;
 volatile uint32_t rx_get_itr;
 
+/* Functions */
+void tx_fifo_init(void);
+uint8_t tx_fifo_put(tx_dataType data);
+uint8_t tx_fifo_get(tx_dataType *pData);
+uint32_t tx_fifo_size(void);
+void rx_fifo_init(void);
+uint8_t rx_fifo_put(rx_dataType data);
+uint8_t rx_fifo_get(rx_dataType *pData);
+uint32_t rx_fifo_size(void);
+
+
+
 /* Initialize Tx fifo */
 
 void tx_fifo_init(void)
