@@ -68,7 +68,7 @@ uint8_t tx_fifo_get(tx_dataType *pData)
      }
 
      /* Get the data*/
-     *pData = TX_FIFO[tx_get_itr * (TXFIFOSIZE - 1)];
+     *pData = TX_FIFO[tx_get_itr & (TXFIFOSIZE - 1)];
 
      /* Increment the itr */
      tx_get_itr++;
@@ -119,7 +119,7 @@ uint8_t rx_fifo_get(rx_dataType *pData)
      }
 
      /* Get the data*/
-     *pData = RX_FIFO[tx_get_itr * (TXFIFOSIZE - 1)];
+     *pData = RX_FIFO[tx_get_itr & (TXFIFOSIZE - 1)];
 
      /* Increment the itr */
      rx_get_itr++;

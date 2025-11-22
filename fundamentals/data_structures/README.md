@@ -19,4 +19,6 @@ Consumer:
 
 ### Code
 
-- [fifo (C implementation)](fifo.c)
+- [fifo (C implementation)](fifo_in_c.c)
+- [fifo.s](fifo.s)
+- [main.s](main.s)
