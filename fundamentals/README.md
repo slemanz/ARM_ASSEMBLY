@@ -12,6 +12,8 @@
 - **[ADC Driver](adc/)**
 - **[UART Driver](uart/)**
 - **[Systick Driver](systick/)**
+- **[Timers Driver](timers//)**
+- **[Data Structures](data_structures/)**
 
 ## Important Notes
 
