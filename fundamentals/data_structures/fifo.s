@@ -57,3 +57,37 @@ _not_full:
         str     r3, [r1]        /* Update putPt */
         mov     r0, #1          /* Success */
         bx      lr
+
+
+/*
+    Takes address to store value from fifo as argument
+    destination address is passed to r0
+    R0 has return value, 1 for success
+    and 0 for failure
+ */
+ fifo_get:
+        push    {r4, r5, lr}
+        ldr     r1, =putPt_addr
+        ldr     r1, [r1]        /* putPt */
+        ldr     r2, =getPt_addr
+        ldr     r3, [r2]
+        cmp     r1, r3          /* check if putPt == getPt */
+        bne     _fifo_not_empty
+        mov     r0, #0          /* fifo is empty, nothing to get, error */
+        b       _cleanup
+
+_fifo_not_empty:
+        ldrsb   r4, [r3]
+        strb    r4, [r0]
+        add     r3, r3, #1      /* move to next place */
+        ldr     r5, =fifo_end_addr
+        cmp     r3, r5          /* check if getPt + 1 == end_of_fifo */
+        bne     _update_get_pt
+        ldr     r3, =fifo_addr  /* wrap around, meaning set position to starting point */
+
+_update_get_pt:
+        str r3, [r2]
+
+_cleanup:
+        pop {r4, r5, lr}
+
