@@ -1,14 +1,13 @@
 
         .section .data
 
-putPt       .space      4   /* Allocate 4 bytes of memory filled with zeros */
-getPt       .space      4   /* Allocate 4 bytes of memory filled with zeros */
-
+putPt:      .space      4   /* Allocate 4 bytes of memory filled with zeros */
+getPt:      .space      4   /* Allocate 4 bytes of memory filled with zeros */
 .equ        SIZE,       8
 fifo:       .space      SIZE /* fifo can accept size-1 items */
 
 .equ        fifo_addr,      fifo            /* Address of fifo */
-.equ        fifo_end_addr   fifo + SIZE
+.equ        fifo_end_addr,  fifo + SIZE
 .equ        putPt_addr,     putPt           /* Put pointer address */
 .equ        getPt_addr,     getPt           /* Get pointer address */
 
@@ -17,6 +16,10 @@ fifo:       .space      SIZE /* fifo can accept size-1 items */
         .fpu    softvfp
         .thumb
         .section .text
+        .global     fifo_init
+        .global     fifo_put
+        .global     fifo_get
+        .global     fifo_size
 
 fifo_init:
         /* Set putPt and getPt to fifo_addr */
@@ -91,3 +94,20 @@ _update_get_pt:
 _cleanup:
         pop {r4, r5, lr}
 
+
+/*
+    Returns current number of elements in fifo,
+    R0 contians return value
+ */
+
+ fifo_size:
+        ldr     r1, =putPt_addr
+        ldr     r1, [r1]
+        ldr     r2, =getPt_addr
+        ldr     r3, [r2]
+        sub     r0, r1, r3 /* putPt - getPt */
+        and     r0, #(SIZE - 1)
+        bx      lr
+
+        .align 
+        .end

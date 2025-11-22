@@ -23,6 +23,7 @@ OBJCOPY=arm-none-eabi-objcopy
 ############################################
 
 OBJS		+= $(BUILD_DIR)/main.o
+OBJS		+= $(BUILD_DIR)/fifo.o
 OBJS		+= $(BUILD_DIR)/startup.o
 
 
