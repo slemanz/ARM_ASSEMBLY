@@ -33,8 +33,35 @@ struct State
 
 typedef const struct State stateType;
 
+#define go_north        0
+#define wait_north      1
+#define go_east         2
+#define wait_east       3
+
+stateType STATE_MACHINE[4] = {
+    // using 3 sec and 0.5 sec for demo
+    {0x210, 3000, {go_north, wait_north, go_north, wait_north}},
+    {0x210,  500, {go_east, go_east, go_east, go_east}},
+    {0x0C0, 3000, {go_east, go_east, wait_east, wait_east}},
+    {0x210, 3000, {go_north, go_north, go_north, go_north}}
+};
+
+void TrafficSystemInit(void);
 
 int main(void)
 {
+    // 1. Initialize hardware then set initial state
 
+    while(1)
+    {
+
+    }
+
+}
+
+
+
+void TrafficSystemInit(void)
+{
+    RCC->AHB1ENR |= (0x01 | 0x04); // enable clock access to PORTA and PORTC
 }
