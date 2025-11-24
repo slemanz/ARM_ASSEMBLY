@@ -63,7 +63,19 @@ and collect Information about environment.
 - PC1: North car sensor
 
 | PCO   | PC1   | Meaning |
+|---|---|---|
 | 0     | 0     | No cars exist on either road  |
 | 0     | 1     | Cars are on the east road     |
 | 1     | 0     | Cars are on the north road    |
 | 1     | 1     | Cars are on both roads        |
+
+**Step 2: States (and outputs):**
+
+Create state and give each state a symbolic name.
+
+|           | PA9   | PA8   | PA7   | PA6   | PA5   | PA4   |       |
+|---        | ---   | ---   | ---   | ---   | ---   | ---   | ---   |
+| go_north  | 1     | 0     | 0     | 0     | 0     | 1     | 0x210 |
+| wait_north | 1    | 0     | 0     | 0     | 1     | 0     | 0x220 |
+| go_east   | 0     | 0     | 1     | 1     | 0     | 0     | 0x0C0 |
+| wait_east | 0     | 1     | 0     | 1     | 0     | 0     | 0x140 |
