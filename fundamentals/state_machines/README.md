@@ -79,3 +79,23 @@ Create state and give each state a symbolic name.
 | wait_north | 1    | 0     | 0     | 0     | 1     | 0     | 0x220 |
 | go_east   | 0     | 0     | 1     | 1     | 0     | 0     | 0x0C0 |
 | wait_east | 0     | 1     | 0     | 1     | 0     | 0     | 0x140 |
+
+**Decision rules:**
+
+1. If no cars are coming stay in green state
+2. To change from green to red implement yellow for exactly 5 seconds.
+3. Green lights should last for at least 30 seconds
+4. If cars are only coming in one direction, move to that direction and stay in green.
+5. If cars are coming in both directions cycle through all 4 states.
+
+**Map FSM Graph unto data structure:**
+
+```C
+struct State{
+    uint32_t Out; //E.g 180001
+    uint32_t Time;//E. 30
+    const struct state * Next [4]; //E.g. gon, waith, gon, wat tN
+}
+```
+
+[State machines in c](state_in_c.c)
