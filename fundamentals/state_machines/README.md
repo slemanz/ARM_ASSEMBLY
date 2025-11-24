@@ -42,3 +42,28 @@ causing that state transition.
 - We use a linked structure with fixed size
 - There should be one-to-one mapping between the FSM state graph and the data
 structure.
+
+## Designing Traffic Light System using Moore FSM
+
+**3 Steps:**
+
+1. Define what a state is. E.g. Light patterns
+2. Make a list of various states in which system might exist.
+3.  Add outputs and inputs to enable the system to affect external environment
+and collect Information about environment.
+
+**Key points about the system:**
+
+- State describes which road has authority to cross the intersection.
+- Light pattern defines which road has right of way over the other.
+
+**Step 1: Inputs**
+
+- PCO: East car sensor
+- PC1: North car sensor
+
+| PCO   | PC1   | Meaning |
+| 0     | 0     | No cars exist on either road  |
+| 0     | 1     | Cars are on the east road     |
+| 1     | 0     | Cars are on the north road    |
+| 1     | 1     | Cars are on both roads        |
