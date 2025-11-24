@@ -43,14 +43,16 @@ stateType STATE_MACHINE[4] = {
     {0x210, 3000, {go_north, wait_north, go_north, wait_north}},
     {0x210,  500, {go_east, go_east, go_east, go_east}},
     {0x0C0, 3000, {go_east, go_east, wait_east, wait_east}},
-    {0x210, 3000, {go_north, go_north, go_north, go_north}}
+    {0x210,  500, {go_north, go_north, go_north, go_north}}
 };
 
 void TrafficSystemInit(void);
+void delayMs(int n);
 
 int main(void)
 {
     // 1. Initialize hardware then set initial state
+    TrafficSystemInit();
 
     while(1)
     {
@@ -64,4 +66,22 @@ int main(void)
 void TrafficSystemInit(void)
 {
     RCC->AHB1ENR |= (0x01 | 0x04); // enable clock access to PORTA and PORTC
+    TRAFFIC_LIGHTS_PORT->MODER |= NORTH_LED_RED_MODE_BIT | NORTH_LED_RED_MODE_BIT |
+                                    NORTH_LED_YELLOW_MODE_BIT | EAST_LED_RED_MODE_BIT |
+                                    EAST_LED_GREEN_MODE_BIT | EAST_LED_YELLOW_MODE_BIT;
+
+
+}
+
+void delayMs(int n)
+{
+    /* Configure Systick */
+    SYSTICK->LOAD = 16000; /* reload with nomber of clocks por milliseconds */
+    SYSTICK->VAL = 0; /* Clear current value register */
+    SYSTICK->CTRL = 0x05; /* Enable the timer */
+
+    for(int i = 0; i < n; i++)
+    {
+        while((SYSTICK->CTRL & 0x10000) == 0){} /* Wait until COUNTFLAG is set*/
+    }
 }
