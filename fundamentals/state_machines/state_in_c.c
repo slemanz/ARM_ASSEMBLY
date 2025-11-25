@@ -19,6 +19,9 @@
 #define NORTH_LED_YELLOW_MODE_BIT   (1U << 16)
 #define NORTH_LED_GREEN_MODE_BIT    (1U << 14)
 
+#define NORTH_SENSOR                (1U << 1)
+#define EAST_SENSOR                 (1U << 0)
+
 // go_north, PA9-4   = 100001 makes it green on North and red on East
 // wait_north, PA9-4 = 100010 makes it yellow on North and red on East
 // go_east, PA9-4    = 001100 makes it red on North and green on East
@@ -49,13 +52,22 @@ stateType STATE_MACHINE[4] = {
 void TrafficSystemInit(void);
 void delayMs(int n);
 
+uint8_t current_state;
+uint8_t system_input;
+
 int main(void)
 {
     // 1. Initialize hardware then set initial state
     TrafficSystemInit();
 
+    current_state = go_north;
+
     while(1)
     {
+        TRAFFIC_LIGHTS_PORT->ODR = STATE_MACHINE[current_state].output;
+        delayMs(STATE_MACHINE[current_state].time);
+        system_input = CAR_SENSOR_PORT->IDR & (NORTH_SENSOR | EAST_SENSOR);
+        current_state = STATE_MACHINE[current_state].next_state[system_input];
 
     }
 
