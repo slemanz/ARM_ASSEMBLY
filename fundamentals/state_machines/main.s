@@ -68,6 +68,36 @@
         .global systick_delay
         .global systick_delay_ms
 
+/* Make sure PA0 is always set HIGH for debug usb connection */
+go_north:
+        .word	0x211   /* Green on North, Red on East */
+        .word   3000    /* 3sec */
+        .word	go_north, wait_north, go_north, wait_north
+
+wait_north:
+        .word   0x221    /* Yellow on North, Red on East */
+        .word   500      /* 0.5 sec */
+        .word   go_east, go_east, go_east, go_east
+
+go_east:
+        .word   0x0C1   /* Red on North, Green on East */
+        .word   3000
+        .word   go_east, go_east, wait_east, wait_east
+
+wait_east:
+        .word   0x141 /* Red on North, Yellow on East */
+        .word   500
+        .word   go_north, go_north, go_north, go_north
+
+.equ    OUT,  0     /* offset of output value in data structure */
+.equ    WAIT, 4     /* offset of time value in data structure */
+.equ    NEXT, 8     /* offset of NEXT value in data structure */
+
+
+/* PC0 =  0001 ,PC1 = 0010 , PC0+ PC1 =  0011 =  0x3 */
+.equ    SENSOR_PINS, 0x3
+.equ    go_north_addr, go_north
+
 __main:
 
 loop:
