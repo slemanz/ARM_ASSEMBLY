@@ -1,37 +1,60 @@
+/*
+    PC0 :  East car sensor
+    PC1 :  North car sensor
+*/
 
-.equ    RCC_BASE,           0x40023800
-.equ    AHB1ENR_OFFSET,     0x30
+/*
+    Go north    :  PA9-PA4 = 100001 = 0x21: Green on North, Red on East
+    Wait north  :  PA9-PA4 = 100010 = 0x22: Yellow on North, Red on East
+    Go east     :  PA9-PA4 = 001100 = 0x0C: Red on North, Green on East
+    Wait east   :  PA9-PA4 = 010100 = 0x14: Red on North, Yellow on East
+*/
 
-.equ    RCC_AHB1ENR,        (RCC_BASE + AHB1ENR_OFFSET)
-.equ    GPIOA_BASE,         0x40020000
+.equ RCC_BASE,              0x40023800
+.equ AHB1ENR_OFFSET,        0x30
 
-.equ    MODER_OFFSET,       0x00
-.equ    PUPDR_OFFSET,       0x0C
-.equ    IDR_OFFSET,         0x10
-.equ    ODR_OFFSET,         0x14
-.equ    BSRR_OFFSET,        0x18
+.equ RCC_AHB1ENR,           (RCC_BASE + AHB1ENR_OFFSET)
+.equ GPIOA_BASE,            0x40020000
 
-.equ    GPIOA_MODER,        (GPIOA_BASE + MODER_OFFSET)
-.equ    GPIOA_PUPDR,        (GPIOA_BASE + PUPDR_OFFSET)
-.equ    GPIOA_IDR,          (GPIOA_BASE + IDR_OFFSET)
-.equ    GPIOA_ODR,          (GPIOA_BASE + ODR_OFFSET)
-.equ    GPIOA_BSRR,         (GPIOA_BASE + BSRR_OFFSET)
+.equ MODER_OFFSET,          0x00
+.equ GPIOA_MODER,           (GPIOA_BASE + MODER_OFFSET)
 
+.equ ODR_OFFSET,            0x14
+.equ GPIOA_ODR,             (GPIOA_BASE + ODR_OFFSET)
 
-.equ    GPIOA_EN,           (1 << 0)
-.equ    MODER5_OUT,         (1 << 10)
-.equ    PUPDR6_PU,          (1 << 12)
-.equ    LED_ON,             (1U << 5)
-.equ    LED_OFF,            (1U << 0)
-.equ    ONESEC,             5333333
+.equ BSRR_OFFSET,           0x18
+.equ GPIOA_BSRR,            (GPIOA_BASE + BSRR_OFFSET)
 
-.equ BSRR_5_SET,            (1 << 5)
-.equ BSRR_5_RESET,          (1 << 21)
+.equ GPIOC_BASE,            0x40020800
+.equ GPIOC_MODER,           (GPIOC_BASE + MODER_OFFSET)
+.equ IDR_OFFSET,            0x10
+.equ GPIOC_IDR,             (GPIOC_BASE + IDR_OFFSET)
 
-// active low switch
-.equ    BTN_ON,             0x0000
-.equ    BTN_OFF,            0x0040
-.equ    BTN_PIN,            0x0040
+.equ GPIOA_EN,              (1 << 0) // 0B 000000 00000.............0001
+.equ GPIOC_EN,              (1 << 2)
+
+.equ TRAFFIC_LIGHTS_ODR,        GPIOA_ODR
+.equ TRAFFIC_LIGHTS_MDR,        GPIOA_MODER
+.equ CAR_SENSORS_MDR,           GPIOC_MODER
+.equ CAR_SENSORS_IDR,           GPIOC_IDR
+
+.equ MODER4_OUT,                (1U << 8)
+.equ MODER5_OUT,                (1U << 10)
+.equ MODER6_OUT,                (1U << 12)
+.equ MODER7_OUT,                (1U << 14)
+.equ MODER8_OUT,                (1U << 16)
+.equ MODER9_OUT,                (1U << 18)
+
+.equ NORTH_LED_RED,             (1U << 6)
+.equ NORTH_LED_YELLOW,          (1U << 5)
+.equ NORTH_LED_GREEN,           (1U << 4)
+
+.equ EAST_LED_RED,              (1U << 9)
+.equ EAST_LED_YELLOW,           (1U << 8)
+.equ EAST_LED_GREEN,            (1U << 7)
+
+.equ NORTH_SENSOR,              (1U << 1)
+.equ EAST_SENSOR,               (1U << 0)
 
 
         .syntax unified
@@ -41,66 +64,14 @@
 
         .section .text
         .global __main
+        .global systick_init
+        .global systick_delay
+        .global systick_delay_ms
 
 __main:
-        bl      gpio_init
 
 loop:
-        bl      get_input
-        cmp     r0, #BTN_ON
-        beq     turn_led_on
-        cmp     r0, #BTN_OFF
-        beq     turn_led_off
         b       loop
-
-
-
-
-turn_led_on:
-        mov     r1, #0
-        ldr     r2, =GPIOA_BSRR
-        mov     r1, #BSRR_5_SET
-        str     r1, [r2]
-
-turn_led_off:
-        mov     r1, #0
-        ldr     r2, =GPIOA_BSRR
-        mov     r1, #BSRR_5_RESET
-        str     r1, [r2]
-
-get_input:
-        ldr     r1, =GPIOA_IDR
-        ldr     r0, [r1]
-        and     r0, r0, #BTN_PIN
-        bx      lr
-    
-gpio_init:
-        /* Set PA5 as output */
-        /* ENABLE CLOCK ACCESS TO GPIOA */
-        ldr r0, =RCC_AHB1ENR
-
-        ldr r1, [r0]
-
-        orr r1, #GPIOA_EN
-
-        str r1, [r0]
-
-        // set PA5 as output
-        ldr r0, =GPIOA_MODER
-        ldr r1, [r0]
-        orr r1, #MODER5_OUT
-        str r1, [r0]
-
-        // set PA6 as input
-        ldr r0, =GPIOA_PUPDR
-        ldr r1, [r0]
-        orr r1, #PUPDR6_PU
-        str r1, [r0]
-        bx  lr
-
-stop:
-        b stop
-
 
         .align
         .end
