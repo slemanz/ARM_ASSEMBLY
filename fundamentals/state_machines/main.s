@@ -99,6 +99,49 @@ wait_east:
 .equ    go_north_addr, go_north
 
 __main:
+        bl   systick_init
+
+        /* Enable clock access to GPIOA */
+        ldr  r0, =RCC_AHB1ENR
+        ldr  r1, [r0]
+        orr  r1, #GPIOA_EN
+        str  r1, [r0]
+
+        /* Set all traffic light pins to ouput */
+        ldr  r0, =TRAFFIC_LIGHTS_MDR
+        ldr  r1, [r0]
+
+        orr  r1, #MODER4_OUT
+        orr  r1, #MODER5_OUT
+        orr  r1, #MODER6_OUT
+        orr  r1, #MODER7_OUT
+        orr  r1, #MODER8_OUT
+        orr  r1, #MODER9_OUT
+
+        str  r1, [r0]
+
+        /* Enable clock to GPIOC */
+        ldr  r0, =RCC_AHB1ENR
+        ldr  r1, [r0]
+        orr  r1, #GPIOC_EN
+        str  r1, [r0]
+
+        ldr  r4, =go_north_addr /* State pointer */
+        ldr  r5, =CAR_SENSORS_IDR
+        ldr  r6, =TRAFFIC_LIGHTS_ODR
+
+fsm:
+        ldr  r0, [r4, #OUT] /* Output value */
+        str  r0, [r6]       /* Configure lights */
+        ldr  r0, [r4, #WAIT]
+        bl   systick_delay_ms
+
+        ldr  r0, [r5]
+        and  r0, r0, #SENSOR_PINS
+        lsl  r0, r0, #2     /* Multiply by 4 = {0,4,8,12} */
+        add  r0, r0, #NEXT  /* {8,12,16,20}*/
+        ldr  r4, [r4, r0]
+        b    fsm
 
 loop:
         b       loop

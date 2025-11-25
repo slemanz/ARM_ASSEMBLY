@@ -58,7 +58,7 @@ systick_delay:
         str     r0, [r1]
 
         /* Check if timeout has occured */
-        ldr     r1, =NVIC_ST_CTRL_
+        ldr     r1, =NVIC_ST_CTRL_R
 lp1:
         ldr     r3, [r1]
         ands    r3, r3, #ST_CTRL_COUNTFLG
@@ -69,7 +69,7 @@ lp1:
 systick_delay_ms:
         push    {r4, lr} /* Save current value of r4 and lr */
         movs    r4, r0
-        beq     cmpl
+        beq     cmplt
 
 lp2:
         ldr     r0, =DELAY1MS
